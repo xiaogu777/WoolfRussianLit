@@ -12,16 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <link href="https://unpkg.com/vis-network/standalone/umd/vis-network.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
 
 
-	<!-- Bootstrap JavaScript -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-	
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<title>伍尔夫大事记可视化</title>
+    <title>伍尔夫大事记可视化</title>
 
 
     <style>
@@ -114,29 +114,73 @@
             display: inline-block;
             vertical-align: middle;
         }
-		
     </style>
-	<style>
-	  .btn-transparent {
-		background-color: transparent; /* 设置背景透明 */
-		color: #007bff; /* 调整文字颜色以保证可读性，可以根据你的设计调整颜色 */
-		border-color: #007bff; /* 给按钮设置边框颜色以保持可视边界 */
-	  }
-	  .btn-transparent:hover, .btn-transparent:focus {
-		background-color: rgba(0, 123, 255, 0.1); /* 鼠标悬停和聚焦时的背景颜色 */
-		border-color: #007bff;
-	  }
-	  .modal-body {
-		font-family: 'Noto Serif SC', serif;  /* 应用 Noto Serif SC 字体 */
-		font-size: 16px;  /* 设置适当的字体大小 */
-		line-height: 1.6;  /* 设置合适的行高 */
-		color: #333;  /* 设定深色字体颜色以增强对比和可读性 */
-	  }
-	  .modal-title {
-		font-family: 'Roboto', sans-serif;;
-		font-weight: bold; /* 设置字体加粗 */
-	  }
-	</style>
+    <style>
+        .btn-transparent {
+            background-color: transparent;
+            /* 设置背景透明 */
+            color: #007bff;
+            /* 调整文字颜色以保证可读性，可以根据你的设计调整颜色 */
+            border-color: #007bff;
+            /* 给按钮设置边框颜色以保持可视边界 */
+        }
+
+        .btn-transparent:hover,
+        .btn-transparent:focus {
+            background-color: rgba(0, 123, 255, 0.1);
+            /* 鼠标悬停和聚焦时的背景颜色 */
+            border-color: #007bff;
+        }
+
+        .modal-body {
+            font-family: 'Noto Serif SC', serif;
+            /* 应用 Noto Serif SC 字体 */
+            font-size: 16px;
+            /* 设置适当的字体大小 */
+            line-height: 1.6;
+            /* 设置合适的行高 */
+            color: #333;
+            /* 设定深色字体颜色以增强对比和可读性 */
+        }
+
+        .modal-title {
+            font-family: 'Roboto', sans-serif;
+            ;
+            font-weight: bold;
+            /* 设置字体加粗 */
+        }
+    </style>
+    <style>
+        .custom-list {
+          list-style: none; /* 移除默认列表样式 */
+          padding-left: 0; /* 移除默认的左填充 */
+        }
+        
+        .custom-list li {
+          position: relative;
+          margin-bottom: 10px; /* 为列表项之间添加一些间隔 */
+        }
+        
+        .custom-list li::before {
+          content: '•'; /* 使用圆圈符号 */
+          color: black; /* 圆圈颜色，可以根据需要更改 */
+          font-size: 20px; /* 圆圈大小，根据需要调整 */
+          position: absolute;
+          left: -1.5em; /* 将圆圈向左调整以对齐 */
+          top: 0;
+        }
+        
+        .custom-list ul {
+          list-style: none; /* 为嵌套列表移除样式 */
+          padding-left: 15px; /* 为嵌套列表添加一些左填充 */
+        }
+        
+        .custom-list ul li::before {
+          content: '-'; /* 嵌套列表也使用圆圈符号 */
+          font-size: 15px; /* 嵌套列表圆圈较小 */
+          left: -1em; /* 对齐嵌套列表的圆圈 */
+        }
+      </style>
     <!--
 	<style>
 		.vis-tooltip {
@@ -153,37 +197,57 @@
 
 <!-- 模态框 -->
 <div class="modal fade" id="usageModal" tabindex="-1" aria-labelledby="usageModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="usageModalLabel">网站使用说明</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        这里是网站的使用说明文本。你可以根据需要添加更多的文本、图片或者视频来更详细地说明网站的功能和操作方法。
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usageModalLabel">网站使用说明</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="custom-list">
+                    <li><strong>地图操作</strong>：
+                        <ul>
+                            <li>地图可进行缩放和平移，用于查看事件发生的地点，帮助用户梳理思路。</li>
+                        </ul>
+                    </li>
+                    <li><strong>时间滑块</strong>：
+                        <ul>
+                            <li>页面提供一个时间滑块来选择感兴趣的时间段。</li>
+                            <li>用户可以通过拖动滑块的两端或者直接输入来定义开始年份和结束年份。</li>
+                            <li>确定选择后，页面将展示该时间段内的相关事件和数据。</li>
+                        </ul>
+                    </li>
+                    <li><strong>事件和关系图表</strong>：
+                        <ul>
+                            <li>时间滑块和事件类型用于筛选用于展示的事件。</li>
+                            <li>人物关系用于选择展示的人物关系图，一次只能展示一种关系图，可拖动缩放节点以更清晰地查看具体的关系信息。</li>
+                            <li>这些图表提供了事件之间以及人物之间的视觉关联，帮助用户更好地理解历史脉络。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="aboutModalLabel">关于我们</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        本网站聚焦英国20世纪初的“俄罗斯热”，关注以伍尔夫为代表的英国文化精英在这一文化互动过程中的关键作用，着手于伍尔夫的小说、散文、日记、翻译等基本材料，从接受史的视角进入具体语境，探究伍尔夫对以托尔斯泰、陀思妥耶夫斯基、契诃夫、屠格涅夫等俄国作家创作的矛盾心理，从陌生到欣赏，再到批判接受，经历感性到理性、实践到理论的升华过程，完成了与俄罗斯文学大师的智性对话与交流，对英国现代主义文学产生了深远影响。
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalLabel">关于我们</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                本网站聚焦英国20世纪初的“俄罗斯热”，关注以伍尔夫为代表的英国文化精英在这一文化互动过程中的关键作用，着手于伍尔夫的小说、散文、日记、翻译等基本材料，从接受史的视角进入具体语境，探究伍尔夫对以托尔斯泰、陀思妥耶夫斯基、契诃夫、屠格涅夫等俄国作家创作的矛盾心理，从陌生到欣赏，再到批判接受，经历感性到理性、实践到理论的升华过程，完成了与俄罗斯文学大师的智性对话与交流，对英国现代主义文学产生了深远影响。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <body class="flex flex-col h-full">
@@ -229,9 +293,11 @@
             <div class="flex items-center justify-between bg-gray-800 text-white p-4" id="title">
                 <h1 class="text-2xl font-bold">伍尔夫大事记可视化交互系统</h1>
                 <div>
-					<button type="button" class="btn btn-primary btn-transparent" data-bs-toggle="modal" data-bs-target="#usageModal">使用说明</button>
-					<button button type="button" class="btn btn-primary btn-transparent" data-bs-toggle="modal" data-bs-target="#aboutModal">关于我们</button>
-				</div>
+                    <button type="button" class="btn btn-primary btn-transparent" data-bs-toggle="modal"
+                        data-bs-target="#usageModal">使用说明</button>
+                    <button button type="button" class="btn btn-primary btn-transparent" data-bs-toggle="modal"
+                        data-bs-target="#aboutModal">关于我们</button>
+                </div>
             </div>
             <div id="map"></div>
             <div class="flex" id="display-area">
