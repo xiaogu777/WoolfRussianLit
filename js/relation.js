@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// 定义一个异步函数来加载数据，并返回nodes和edges
 	async function loadGraphData(relationshipType) {
-		let nodeFile = relationshipType === '族谱图' ? './data/node_family.json' : './data/node_intercourse.json';
-        let edgeFile = relationshipType === '交际网' ? './data/edge_intercourse.json' : './data/edge_family.json';
+		let nodeFile = relationshipType === '伍尔夫族谱图' ? './data/node_family.json' : './data/node_intercourse.json';
+        let edgeFile = relationshipType === '伍尔夫交际网' ? './data/edge_intercourse.json' : './data/edge_family.json';
 		try {
 			// 加载节点数据
 			const nodeResponse = await fetch(nodeFile);
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			};
 			
-			if (relationshipType === '交际网') {
+			if (relationshipType === '伍尔夫交际网') {
 				options.layout = {
 					// 禁用层次布局，启用自由布局
 					hierarchical: false,
